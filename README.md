@@ -7,6 +7,7 @@ Prérequis:
 
 Comment utiliser?
 - Ouvrir la ligne de commande. 
+- build l'image docker à partir du dockerfile (il faut se placer dans le dossier contenant le dockerfile et respecter cette syntaxe: docker build . -t download-container)
 - taper la commande de téléchargement tout en respectant la syntaxe suivante:
 
 1- ./Download-Manga nomManga numeroChapitre (pour un seul chapitre)
