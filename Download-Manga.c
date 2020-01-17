@@ -8,9 +8,6 @@
 int x=0,a=0,code=0,indice=0;
 char chaine1[]="-";
 char chaine2[]=",";
-char space[]=".";
-char argum[];
-char arg[]=" ";
 char syscommand[500];
 char* pwdir; 
 char buff[PATH_MAX + 1];
