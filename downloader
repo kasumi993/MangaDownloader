@@ -1,0 +1,108 @@
+#!/bin/bash
+
+code=$1
+manga=$2
+nbr_chap=$#
+chap=$3
+result="0"
+i=1
+j=$chap
+check=4
+pwd=$(pwd)
+
+#un seul chapitre
+
+if [ "$code" = "1" ]
+ then 
+   wget --spider https://www.mangapanda.com/$manga
+   check=$?
+   if [ $check = "0" ]
+    then
+       echo telechargement en cours...
+   	mkdir -p ./$manga/$chap
+   	cd ./$manga/$chap
+   	while [ "$result" = "0" ]
+     	 do
+          wget -H -nd -p -e robots=off -A jpg,jpeg,png,gif https://www.mangapanda.com/$manga/$chap/$i
+          result=$?
+          (( i++ ))
+         done
+        cd $pwd
+    elif [ $check = "8" ]
+	then
+	 echo Ce manga n\'existe pas.Veuillez vérifier la syntaxe
+    else echo Une erreur est survenue. Veuillez vérifier votre connexion et réessayer.
+   fi
+fi
+
+#du chapitre x au chapitre y 
+
+if [ "$code" = "2" ]
+ then 
+   chap2=$4
+   wget --spider https://www.mangapanda.com/$manga
+   check=$?
+   if [ $check = "0" ]
+    then
+       echo telechargement en cours...
+       mkdir -p $manga
+       cd $manga
+       for (( j=$chap; j<=$chap2; j++ ))
+	 do
+	   mkdir -p $j
+	   cd $j
+	   result="0"
+	   while [ "$result" = "0" ]
+	     do
+	      wget -H -nd -p -e robots=off -A jpg,jpeg,png,gif https://www.mangapanda.com/$manga/$j/$i
+	      result=$?
+	      (( i++ ))
+	     done
+	   i=1
+           cd ..
+         done
+	cd $pwd
+    elif [ $check = "8" ]
+	then
+	 echo Ce manga n\'existe pas.Veuillez vérifier la syntaxe
+    else echo Une erreur est survenue. Veuillez vérifier votre connexion et réessayer.
+   fi
+fi
+
+
+#Plusieurs chapitres
+
+if [ "$code" = "3" ]
+ then 
+   wget --spider https://www.mangapanda.com/$manga
+   check=$?
+   if [ $check = "0" ]
+    then
+       echo telechargement en cours...
+       mkdir -p $manga
+       cd $manga
+         for (( j=3; j<=$nbr_chap; j++ ))
+	  do
+	   eval "k=\${$j}"
+	echo $k
+	   mkdir -p $k
+	   cd $k
+           result="0"
+	   while [ "$result" = "0" ]
+	     do
+	      wget -H -nd -p -e robots=off -A jpg,jpeg,png,gif https://www.mangapanda.com/$manga/$k/$i
+	      result=$?
+	      (( i++ ))
+	     done
+           i=1
+           cd ..
+          done 
+    cd $pwd
+    elif [ $check = "8" ]
+	then
+	 echo Ce manga n\'existe pas.Veuillez vérifier la syntaxe
+    else echo Une erreur est survenue. Veuillez vérifier votre connexion et réessayer.
+   fi
+fi
+
+
